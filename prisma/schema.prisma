@@ -13,41 +13,106 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id                       String    @id @default(cuid())
-  email                    String    @unique
-  name                     String
-  lastName                 String
-  password                 String
-  avatar                   String?
-  role                     Role      @default(USER)
-  isActive                 Boolean   @default(false)
-  passwordResetToken       String?
-  passwordResetTokenExpiry DateTime?
-  createdAt                DateTime  @default(now())
-  updatedAt                DateTime  @updatedAt
+model Users {
+  id           String         @id @unique @default(cuid())
+  email        String         @unique @db.VarChar(50)
+  name         String         @db.VarChar(100)
+  phone        String
+  address      String
+  passwordHash String
+  lostPets     LostPets[]
+  adoptionPets AdoptionPets[]
+  createdAt    DateTime       @default(now())
+  updateAt     DateTime       @updatedAt
+  isDeleted    Boolean        @default(false)
 }
 
-model Note {
-  id        String   @id @default(cuid())
-  content   String
-  important Boolean
+model Breed {
+  id        String   @id @unique @default(cuid())
+  name      String   @unique @db.VarChar(100)
+  pets      Pets[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  isDeleted Boolean  @default(false)
 }
 
-model Asset {
-  id                String   @id @default(cuid())
-  name              String
-  price             Float
-  slug              String
-  image             String
-  tokenAssetAddress String
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+model Species {
+  id        String   @id @unique @default(cuid())
+  name      String   @unique @db.VarChar(100)
+  pets      Pets[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  isDeleted Boolean  @default(false)
 }
 
-enum Role {
-  USER
-  ADMIN
+model Contacts {
+  id           String         @id @unique @default(cuid())
+  name         String         @db.VarChar(100)
+  phone        String
+  address      String
+  lostPets     LostPets[]
+  adoptionPets AdoptionPets[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  isDeleted    Boolean        @default(false)
+}
+
+model Images {
+  id    String @id @unique @default(cuid())
+  url   String
+  pet   Pets   @relation(fields: [petId], references: [id])
+  petId String
+}
+
+model Pets {
+  id                 String         @id @unique @default(cuid())
+  name               String         @db.VarChar(100)
+  ageUnit            Boolean
+  age                Int
+  sex                String
+  size               String
+  image              String
+  images             Images[]
+  location_latitude  Float
+  location_longitude Float
+  breed              Breed          @relation(fields: [breedId], references: [id])
+  breedId            String
+  specie             Species        @relation(fields: [specieId], references: [id])
+  specieId           String
+  lostPets           LostPets[]
+  adoptionPets       AdoptionPets[]
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+  isDeleted          Boolean        @default(false)
+}
+
+model LostPets {
+  id          String   @id @unique @default(cuid())
+  lostDate    DateTime
+  statusLost  Boolean
+  description String
+  pet         Pets     @relation(fields: [petId], references: [id])
+  petId       String
+  user        Users    @relation(fields: [userId], references: [id])
+  userId      String
+  contact     Contacts @relation(fields: [contactId], references: [id])
+  contactId   String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  isDeleted   Boolean  @default(false)
+}
+
+model AdoptionPets {
+  id          String   @id @unique @default(cuid())
+  statusAdopt Boolean
+  description String
+  pet         Pets     @relation(fields: [petId], references: [id])
+  petId       String
+  user        Users    @relation(fields: [userId], references: [id])
+  userId      String
+  contact     Contacts @relation(fields: [contactId], references: [id])
+  contactId   String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  isDeleted   Boolean  @default(false)
 }
