@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Conectando Huellas API
-  description: "This is a CRUD API APP made with Express and documented with Swagger for an Shelter Pets website."
+  description: 'This is a CRUD API APP made with Express and documented with Swagger for an Shelter Pets website.'
   version: 1.0.0
 
 servers:
@@ -42,18 +42,18 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/requestBodies/userLogin"
+              $ref: '#/components/requestBodies/userLogin'
       responses:
         200:
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/responses/userLogin"
+                $ref: '#/components/responses/userLogin'
         400:
-          $ref: "#/components/responses/BadRequest"
+          $ref: '#/components/responses/BadRequest'
         500:
-          $ref: "#/components/responses/InternalServerError"
+          $ref: '#/components/responses/InternalServerError'
 
   # USERS
   /users:
@@ -71,11 +71,11 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/user"
+                  $ref: '#/components/schemas/user'
         404:
-          $ref: "#/components/responses/NotFound"
+          $ref: '#/components/responses/NotFound'
         500:
-          $ref: "#/components/responses/InternalServerError"
+          $ref: '#/components/responses/InternalServerError'
 
     post:
       tags:
@@ -86,18 +86,18 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/requestBodies/userCreate"
+              $ref: '#/components/requestBodies/userCreate'
       responses:
         201:
           description: Creado
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/user"
+                $ref: '#/components/schemas/user'
         400:
-          $ref: "#/components/responses/BadRequest"
+          $ref: '#/components/responses/BadRequest'
         500:
-          $ref: "#/components/responses/InternalServerError"
+          $ref: '#/components/responses/InternalServerError'
 
   /users/{id}:
     get:
@@ -112,14 +112,14 @@ paths:
           required: true
           description: ID del usuario
           schema:
-            $ref: "#/components/bases/id"
+            $ref: '#/components/bases/id'
       responses:
         200:
-          $ref: "#/components/responses/user"
+          $ref: '#/components/responses/user'
         404:
-          $ref: "#/components/responses/NotFound"
+          $ref: '#/components/responses/NotFound'
         500:
-          $ref: "#/components/responses/InternalServerError"
+          $ref: '#/components/responses/InternalServerError'
 
     put:
       tags:
@@ -133,26 +133,26 @@ paths:
           required: true
           description: ID del usuario
           schema:
-            $ref: "#/components/bases/id"
+            $ref: '#/components/bases/id'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/requestBodies/userUpdate"
+              $ref: '#/components/requestBodies/userUpdate'
       responses:
         200:
-          $ref: "#/components/responses/user"
+          $ref: '#/components/responses/user'
         400:
-          $ref: "#/components/responses/BadRequest"
+          $ref: '#/components/responses/BadRequest'
         401:
-          $ref: "#/components/responses/Unauthorized"
+          $ref: '#/components/responses/Unauthorized'
         403:
-          $ref: "#/components/responses/Forbidden"
+          $ref: '#/components/responses/Forbidden'
         404:
-          $ref: "#/components/responses/NotFound"
+          $ref: '#/components/responses/NotFound'
         500:
-          $ref: "#/components/responses/InternalServerError"
+          $ref: '#/components/responses/InternalServerError'
 
     delete:
       tags:
@@ -166,18 +166,18 @@ paths:
           required: true
           description: ID del usuario
           schema:
-            $ref: "#/components/bases/id"
+            $ref: '#/components/bases/id'
       responses:
         200:
-          $ref: "#/components/responses/user"
+          $ref: '#/components/responses/user'
         401:
-          $ref: "#/components/responses/Unauthorized"
+          $ref: '#/components/responses/Unauthorized'
         403:
-          $ref: "#/components/responses/Forbidden"
+          $ref: '#/components/responses/Forbidden'
         404:
-          $ref: "#/components/responses/NotFound"
+          $ref: '#/components/responses/NotFound'
         500:
-          $ref: "#/components/responses/InternalServerError"
+          $ref: '#/components/responses/InternalServerError'
 
   /users/email/{email}:
     get:
@@ -192,18 +192,18 @@ paths:
           required: true
           description: Correo electrónico del usuario
           schema:
-            $ref: "#/components/bases/email"
+            $ref: '#/components/bases/email'
       responses:
         200:
-          $ref: "#/components/responses/user"
+          $ref: '#/components/responses/user'
         401:
-          $ref: "#/components/responses/Unauthorized"
+          $ref: '#/components/responses/Unauthorized'
         403:
-          $ref: "#/components/responses/Forbidden"
+          $ref: '#/components/responses/Forbidden'
         404:
-          $ref: "#/components/responses/NotFound"
+          $ref: '#/components/responses/NotFound'
         500:
-          $ref: "#/components/responses/InternalServerError"
+          $ref: '#/components/responses/InternalServerError'
 
   /users/password/{id}:
     patch:
@@ -218,26 +218,26 @@ paths:
           required: true
           description: ID del usuario
           schema:
-            $ref: "#/components/bases/id"
+            $ref: '#/components/bases/id'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/requestBodies/updatePassword"
+              $ref: '#/components/requestBodies/updatePassword'
       responses:
         200:
-          $ref: "#/components/responses/user"
+          $ref: '#/components/responses/user'
         400:
-          $ref: "#/components/responses/BadRequest"
+          $ref: '#/components/responses/BadRequest'
         401:
-          $ref: "#/components/responses/Unauthorized"
+          $ref: '#/components/responses/Unauthorized'
         403:
-          $ref: "#/components/responses/Forbidden"
+          $ref: '#/components/responses/Forbidden'
         404:
-          $ref: "#/components/responses/NotFound"
+          $ref: '#/components/responses/NotFound'
         500:
-          $ref: "#/components/responses/InternalServerError"
+          $ref: '#/components/responses/InternalServerError'
 
   /users/{id}/image:
     patch:
@@ -252,7 +252,7 @@ paths:
           required: true
           description: ID del usuario
           schema:
-            $ref: "#/components/bases/id"
+            $ref: '#/components/bases/id'
       requestBody:
         required: true
         content:
@@ -261,20 +261,20 @@ paths:
               type: object
               properties:
                 image:
-                  $ref: "#/components/bases/image"
+                  $ref: '#/components/bases/image'
       responses:
         200:
-          $ref: "#/components/responses/user"
+          $ref: '#/components/responses/user'
         400:
-          $ref: "#/components/responses/BadRequest"
+          $ref: '#/components/responses/BadRequest'
         401:
-          $ref: "#/components/responses/Unauthorized"
+          $ref: '#/components/responses/Unauthorized'
         403:
-          $ref: "#/components/responses/Forbidden"
+          $ref: '#/components/responses/Forbidden'
         404:
-          $ref: "#/components/responses/NotFound"
+          $ref: '#/components/responses/NotFound'
         500:
-          $ref: "#/components/responses/InternalServerError"
+          $ref: '#/components/responses/InternalServerError'
 
   /users/{id}/delete-image:
     patch:
@@ -289,18 +289,18 @@ paths:
           required: true
           description: ID del usuario
           schema:
-            $ref: "#/components/bases/id"
+            $ref: '#/components/bases/id'
       responses:
         200:
-          $ref: "#/components/responses/user"
+          $ref: '#/components/responses/user'
         401:
-          $ref: "#/components/responses/Unauthorized"
+          $ref: '#/components/responses/Unauthorized'
         403:
-          $ref: "#/components/responses/Forbidden"
+          $ref: '#/components/responses/Forbidden'
         404:
-          $ref: "#/components/responses/NotFound"
+          $ref: '#/components/responses/NotFound'
         500:
-          $ref: "#/components/responses/InternalServerError"
+          $ref: '#/components/responses/InternalServerError'
 
   /users/{id}/activate:
     patch:
@@ -315,18 +315,18 @@ paths:
           required: true
           description: ID del usuario
           schema:
-            $ref: "#/components/bases/id"
+            $ref: '#/components/bases/id'
       responses:
         200:
-          $ref: "#/components/responses/user"
+          $ref: '#/components/responses/user'
         401:
-          $ref: "#/components/responses/Unauthorized"
+          $ref: '#/components/responses/Unauthorized'
         403:
-          $ref: "#/components/responses/Forbidden"
+          $ref: '#/components/responses/Forbidden'
         404:
-          $ref: "#/components/responses/NotFound"
+          $ref: '#/components/responses/NotFound'
         500:
-          $ref: "#/components/responses/InternalServerError"
+          $ref: '#/components/responses/InternalServerError'
 
   /users/{id}/deactivate:
     patch:
@@ -341,15 +341,15 @@ paths:
           required: true
           description: ID del usuario
           schema:
-            $ref: "#/components/bases/id"
+            $ref: '#/components/bases/id'
       responses:
         200:
-          $ref: "#/components/responses/user"
+          $ref: '#/components/responses/user'
         401:
-          $ref: "#/components/responses/Unauthorized"
+          $ref: '#/components/responses/Unauthorized'
         403:
-          $ref: "#/components/responses/Forbidden"
+          $ref: '#/components/responses/Forbidden'
         404:
-          $ref: "#/components/responses/NotFound"
+          $ref: '#/components/responses/NotFound'
         500:
-          $ref: "#/components/responses/InternalServerError"
+          $ref: '#/components/responses/InternalServerError'

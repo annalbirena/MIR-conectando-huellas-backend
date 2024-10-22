@@ -16,7 +16,7 @@
       "@api/*": ["./src/api/*"],
       "@config/*": ["./src/config/*"],
       "@auth/*": ["./src/auth/*"],
-      "@middlewares/*": ["./src/middlewares/*"],
+      "@middlewares/*": ["./src/middlewares/*"]
     }
   },
   "include": ["src/**/*"]
