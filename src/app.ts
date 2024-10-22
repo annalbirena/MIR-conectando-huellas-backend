@@ -1,6 +1,6 @@
 import path from 'node:path';
-import setupExpress from '@config/express';
-import errorHandler from '@middlewares/errorHandler';
+import setupExpress from './config/express';
+import errorHandler from './middlewares/errorHandler';
 import express from 'express';
 import setupRoutes from './routes';
 
