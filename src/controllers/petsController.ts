@@ -1,7 +1,7 @@
 import type { NextFunction, Request, Response } from 'express';
-import { getPets } from '../services/petsService';
+import { PetsService } from '../services/petsService';
 
-export async function PetsController(
+/* export async function PetsController(
   req: Request,
   res: Response,
   next: NextFunction,
@@ -18,15 +18,15 @@ export async function PetsController(
   } catch (error) {
     next(error);
   }
-}
+} */
 
-/* export class PetsController {
+export class PetsController {
   static async getPets(_: Request, res: Response, next: NextFunction) {
     try {
       const pets = await PetsService.getPets();
 
       if (!pets) {
-        res.status(404).json({ error: "No hay mascotas" });
+        res.status(404).json({ error: 'No hay mascotas' });
         return;
       }
 
@@ -35,4 +35,4 @@ export async function PetsController(
       next(error);
     }
   }
-} */
+}
