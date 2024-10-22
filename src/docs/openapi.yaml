@@ -1,0 +1,355 @@
+openapi: 3.0.0
+info:
+  title: Conectando Huellas API
+  description: 'This is a CRUD API APP made with Express and documented with Swagger for an Shelter Pets website.'
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:9090/api
+    description: Servidor de desarrollo
+  - url: Pendiente
+    description: Servidor de producción
+
+tags:
+  - name: Auth
+    description: Operaciones relacionadas con la autenticación de usuarios
+  - name: Users
+    description: Operaciones relacionadas con los usuarios
+  - name: Breed
+    description: Operaciones relacionadas con las razas
+  - name: Species
+    description: Operaciones relacionadas con las especies
+  - name: Contacts
+    description: Operaciones relacionadas con los contactos
+  - name: Images
+    description: Operaciones relacionadas con las imágenes de las mascotas
+  - name: Pets
+    description: Operaciones relacionadas con las mascotas
+  - name: LostPets
+    description: Operaciones relacionadas con las mascotas perdidas
+  - name: AdoptionPets
+    description: Operaciones relacionadas con las mascotas en adopción
+
+paths:
+  # AUTH
+  /users/login:
+    post:
+      tags:
+        - Auth
+      summary: Iniciar sesión
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/userLogin'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/userLogin'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+  # USERS
+  /users:
+    get:
+      tags:
+        - Users
+      summary: Obtener todos los usuarios
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/user'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+    post:
+      tags:
+        - Users
+      summary: Crear un usuario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/userCreate'
+      responses:
+        201:
+          description: Creado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+  /users/{id}:
+    get:
+      tags:
+        - Users
+      summary: Obtener un usuario por ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del usuario
+          schema:
+            $ref: '#/components/bases/id'
+      responses:
+        200:
+          $ref: '#/components/responses/user'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+    put:
+      tags:
+        - Users
+      summary: Actualizar un usuario
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del usuario
+          schema:
+            $ref: '#/components/bases/id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/userUpdate'
+      responses:
+        200:
+          $ref: '#/components/responses/user'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+    delete:
+      tags:
+        - Users
+      summary: Eliminar un usuario
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del usuario
+          schema:
+            $ref: '#/components/bases/id'
+      responses:
+        200:
+          $ref: '#/components/responses/user'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+  /users/email/{email}:
+    get:
+      tags:
+        - Users
+      summary: Obtener un usuario por correo electrónico
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: email
+          in: path
+          required: true
+          description: Correo electrónico del usuario
+          schema:
+            $ref: '#/components/bases/email'
+      responses:
+        200:
+          $ref: '#/components/responses/user'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+  /users/password/{id}:
+    patch:
+      tags:
+        - Users
+      summary: Actualizar la contraseña de un usuario
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del usuario
+          schema:
+            $ref: '#/components/bases/id'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/updatePassword'
+      responses:
+        200:
+          $ref: '#/components/responses/user'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+  /users/{id}/image:
+    patch:
+      tags:
+        - Users
+      summary: Actualizar la imagen de perfil de un usuario
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del usuario
+          schema:
+            $ref: '#/components/bases/id'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  $ref: '#/components/bases/image'
+      responses:
+        200:
+          $ref: '#/components/responses/user'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+  /users/{id}/delete-image:
+    patch:
+      tags:
+        - Users
+      summary: Eliminar la imagen de perfil de un usuario
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del usuario
+          schema:
+            $ref: '#/components/bases/id'
+      responses:
+        200:
+          $ref: '#/components/responses/user'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+  /users/{id}/activate:
+    patch:
+      tags:
+        - Users
+      summary: Activar un usuario
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del usuario
+          schema:
+            $ref: '#/components/bases/id'
+      responses:
+        200:
+          $ref: '#/components/responses/user'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
+
+  /users/{id}/deactivate:
+    patch:
+      tags:
+        - Users
+      summary: Desactivar un usuario
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del usuario
+          schema:
+            $ref: '#/components/bases/id'
+      responses:
+        200:
+          $ref: '#/components/responses/user'
+        401:
+          $ref: '#/components/responses/Unauthorized'
+        403:
+          $ref: '#/components/responses/Forbidden'
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/InternalServerError'
