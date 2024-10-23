@@ -33,3 +33,11 @@ export const passwordValidator = body('password')
   .withMessage(
     'La contraseña debe contener al menos una letra mayúscula, un número y un carácter especial.',
   );
+
+export const entityNameValidator = body('name')
+  .exists()
+  .withMessage('El nombre es requerido')
+  .isString()
+  .withMessage('El nombre debe ser válido')
+  .isLength({ min: 2, max: 50 })
+  .withMessage('El nombre debe tener entre 2 y 50 caracteres');

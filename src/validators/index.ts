@@ -1,4 +1,9 @@
-import { emailValidator, emailGetValidator, passwordValidator } from './base';
+import {
+  emailValidator,
+  emailGetValidator,
+  passwordValidator,
+  entityNameValidator,
+} from './base';
 import { createUserValidator, updateUserValidator } from './userValidations';
 
 export {
