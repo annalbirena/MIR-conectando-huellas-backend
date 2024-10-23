@@ -15,8 +15,6 @@ tags:
     description: Operaciones relacionadas con la autenticación de usuarios
   - name: Users
     description: Operaciones relacionadas con los usuarios
-  - name: Breed
-    description: Operaciones relacionadas con las razas
   - name: Species
     description: Operaciones relacionadas con las especies
   - name: Contacts
