@@ -5,7 +5,7 @@ import { authenticateToken } from '../middlewares/authMiddleware';
 import {
   createUserValidator,
   updateUserValidator,
-  emailValidator,
+  emailGetValidator,
   passwordValidator,
 } from '../validators';
 import validate from '../middlewares/validate';
@@ -17,10 +17,8 @@ const PREFIX = '/users';
 router.get(`${PREFIX}/:id`, UserController.getUserById);
 router.get(
   `${PREFIX}/email/:email`,
-  emailValidator,
+  emailGetValidator,
   validate,
-  authenticateToken,
-  authorizeRoles(['admin', 'user']),
   UserController.getUserByEmail,
 );
 router.get(`${PREFIX}/verify/:token`, UserController.verifyAccount);

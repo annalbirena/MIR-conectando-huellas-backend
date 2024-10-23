@@ -1,5 +1,17 @@
-import { body } from 'express-validator';
+import { body, param } from 'express-validator';
 
+// Se utiliza para GET
+export const emailGetValidator = param('email')
+  .exists()
+  .withMessage('El correo electrónico es requerido')
+  .isString()
+  .withMessage('El correo electrónico debe ser válido')
+  .isLength({ max: 50 })
+  .withMessage('El correo electrónico debe tener máximo 50 caracteres')
+  .isEmail()
+  .withMessage('El correo electrónico debe ser un email válido');
+
+// Se utiliza para POST
 export const emailValidator = body('email')
   .exists()
   .withMessage('El correo electrónico es requerido')
