@@ -14,17 +14,20 @@ datasource db {
 }
 
 model Users {
-  id           String         @id @unique @default(cuid())
-  email        String         @unique @db.VarChar(50)
-  name         String         @db.VarChar(100)
-  phone        String
-  address      String
-  passwordHash String
-  lostPets     LostPets[]
-  adoptionPets AdoptionPets[]
-  createdAt    DateTime       @default(now())
-  updateAt     DateTime       @updatedAt
-  isDeleted    Boolean        @default(false)
+  id                String         @id @unique @default(cuid())
+  email             String         @unique @db.VarChar(50)
+  name              String         @db.VarChar(100)
+  phone             String
+  address           String
+  role              Role           @default(USER)
+  passwordHash      String
+  lostPets          LostPets[]
+  adoptionPets      AdoptionPets[]
+  isVerified        Boolean        @default(false)
+  verificationToken String?
+  createdAt         DateTime       @default(now())
+  updateAt          DateTime       @updatedAt
+  isDeleted         Boolean        @default(false)
 }
 
 model Breed {
@@ -125,4 +128,9 @@ model Admin {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   isDeleted    Boolean  @default(false)
+}
+
+enum Role {
+  USER
+  ADMIN
 }
