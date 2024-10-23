@@ -1,4 +1,7 @@
 import { createTransport } from 'nodemailer';
+import Handlebars from 'handlebars';
+import fs from 'fs';
+import path from 'path';
 
 const transporter = createTransport({
   host: 'smtp.gmail.com',
@@ -20,18 +23,27 @@ const sendEmail = async (to: string, subject: string, html: string) => {
 };
 
 export const sendAccountConfirmationEmail = async (
+  name: string,
   to: string,
   token: string,
 ) => {
   // Cambiar la URL de producción
   const verificationUrl = `${process.env.DEPLOY_URL}api/users/verify/${token}`;
 
+  const source = fs.readFileSync(
+    path.join(__dirname, '../templates/validateAccountTemplate.hbs'),
+    'utf8',
+  );
+
+  const template = Handlebars.compile(source);
+  const replacements = {
+    name: name,
+    verificationUrl: verificationUrl,
+  };
+  const htmlToSend = template(replacements);
+
   const subject = 'Confirma tu cuenta';
-  const html = `
-    <h2>Conectando Huellas</h2>
-    <h3>¡Bienvenido a nuestra comunidad!</h3>
-    <p>Confirma tu cuenta haciendo click <a target="_blank" href="${verificationUrl}">aquí</a></p>
-  `;
+  const html = htmlToSend;
 
   await sendEmail(to, subject, html);
 };

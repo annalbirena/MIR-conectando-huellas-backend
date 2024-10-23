@@ -64,6 +64,7 @@ export class UserService {
         // Envio de correo de verificación
         if (user.verificationToken) {
           await sendAccountConfirmationEmail(
+            user.name,
             user.email,
             user.verificationToken,
           );
