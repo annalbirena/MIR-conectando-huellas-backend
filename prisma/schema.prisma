@@ -61,9 +61,10 @@ model Images {
 model Pets {
   id                 String         @id @unique @default(cuid())
   name               String         @db.VarChar(100)
-  ageUnit            Boolean
+  ageUnit            String
   age                Int
   sex                String
+  breed              String?
   size               String
   image              String
   images             Images[]
@@ -82,7 +83,7 @@ model LostPets {
   id          String   @id @unique @default(cuid())
   lostDate    DateTime
   statusLost  Boolean
-  description String
+  description String?
   pet         Pets     @relation(fields: [petId], references: [id])
   petId       String
   user        Users    @relation(fields: [userId], references: [id])
@@ -97,7 +98,7 @@ model LostPets {
 model AdoptionPets {
   id          String   @id @unique @default(cuid())
   statusAdopt Boolean
-  description String
+  description String?
   pet         Pets     @relation(fields: [petId], references: [id])
   petId       String
   user        Users    @relation(fields: [userId], references: [id])

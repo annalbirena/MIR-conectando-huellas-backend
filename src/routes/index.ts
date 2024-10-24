@@ -1,7 +1,8 @@
 import type { Application } from 'express';
-import petsRoutes from './petsRoutes';
+import petsRoutes from './lostpetsRoutes';
 import userRoutes from './userRoutes';
 import speciesRoutes from './speciesRoutes';
+import lotspetsRoutes from './lostpetsRoutes';
 
 export default function setupRoutes(app: Application) {
   app.get('/', (_, res) => {
@@ -13,4 +14,5 @@ export default function setupRoutes(app: Application) {
   app.use(API_PREFIX, userRoutes);
   app.use(API_PREFIX, petsRoutes);
   app.use(API_PREFIX, speciesRoutes);
+  app.use(API_PREFIX, lotspetsRoutes);
 }
