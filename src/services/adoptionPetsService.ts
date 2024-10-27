@@ -163,4 +163,28 @@ export class AdoptionPetsService {
       },
     });
   }
+
+  static async getAdoptionPetsByFilters(
+    sex: string | undefined,
+    size: string | undefined,
+    specieId: string | undefined,
+  ) {
+    const whereClause: any = {}; // Initialize an empty where clause
+    if (sex !== 'undefined') {
+      whereClause.pet = { sex };
+    }
+    if (size !== 'undefined') {
+      whereClause.pet = { size };
+    }
+    if (specieId !== 'undefined') {
+      whereClause.pet = { specieId };
+    }
+    console.log(whereClause);
+    const adoptionPets = await prisma.adoptionPets.findMany({
+      where: whereClause, // Apply the constructed where clause
+      include: { pet: true, user: true, contact: true }, // Include relationships
+    });
+
+    return adoptionPets;
+  }
 }

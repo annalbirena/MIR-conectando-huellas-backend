@@ -79,4 +79,22 @@ export class LostPetsController {
       next(error);
     }
   }
+
+  static async getLostPetsByFilters(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    const { sex, size, specieId } = req.query;
+    try {
+      const lostPets = await LostPetsService.getLostPetsByFilters(
+        String(sex),
+        String(size),
+        String(specieId),
+      );
+      res.json(lostPets);
+    } catch (error) {
+      next(error);
+    }
+  }
 }

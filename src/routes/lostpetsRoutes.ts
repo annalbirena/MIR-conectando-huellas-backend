@@ -14,6 +14,8 @@ router.get(
   authorizeRoles(['admin', 'user']),
   LostPetsController.getLostPetsByUserId,
 );
+router.get(`${PREFIX}/pets/filter`, LostPetsController.getLostPetsByFilters); // Route for filtering
+
 router.post(
   PREFIX,
   authenticateToken,

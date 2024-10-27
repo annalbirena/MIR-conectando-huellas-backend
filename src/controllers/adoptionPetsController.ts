@@ -92,4 +92,22 @@ export class AdoptionPetsController {
       next(error);
     }
   }
+
+  static async getAdoptionPetsByFilters(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    const { sex, size, specieId } = req.query;
+    try {
+      const adoptionPet = await AdoptionPetsService.getAdoptionPetsByFilters(
+        String(sex),
+        String(size),
+        String(specieId),
+      );
+      res.json(adoptionPet);
+    } catch (error) {
+      next(error);
+    }
+  }
 }

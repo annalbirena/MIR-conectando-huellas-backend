@@ -14,6 +14,10 @@ router.get(
   authorizeRoles(['admin', 'user']),
   AdoptionPetsController.getAdoptionPetsByUserId,
 );
+router.get(
+  `${PREFIX}/pets/filter`,
+  AdoptionPetsController.getAdoptionPetsByFilters,
+);
 router.post(
   PREFIX,
   authenticateToken,
