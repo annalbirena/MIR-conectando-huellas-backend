@@ -86,4 +86,28 @@ export class LostPetsService {
       include: { pet: true },
     });
   }
+
+  static async getLostPetsByFilters(
+    sex: string | undefined,
+    size: string | undefined,
+    specieId: string | undefined,
+  ) {
+    const whereClause: any = {}; // Initialize an empty where clause
+    if (sex !== 'undefined') {
+      whereClause.pet = { sex };
+    }
+    if (size !== 'undefined') {
+      whereClause.pet = { size };
+    }
+    if (specieId !== 'undefined') {
+      whereClause.pet = { specieId };
+    }
+    console.log(whereClause);
+    const lostPets = await prisma.lostPets.findMany({
+      where: whereClause, // Apply the constructed where clause
+      include: { pet: true, user: true, contact: true }, // Include relationships
+    });
+
+    return lostPets;
+  }
 }

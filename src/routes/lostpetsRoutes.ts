@@ -8,6 +8,8 @@ const PREFIX = '/lostpets';
 
 router.get(PREFIX, LostPetsController.getLostPets);
 router.get(`${PREFIX}/:id`, LostPetsController.getLostPetById);
+router.get(`${PREFIX}/pets/filter`, LostPetsController.getLostPetsByFilters); // Route for filtering
+
 router.post(
   PREFIX,
   authenticateToken,
