@@ -62,7 +62,10 @@ export class UserController {
 
     try {
       const user = await UserService.verifyAccount(token);
-      res.json({ message: `Cuenta verificada, usuario ${user.id}` });
+
+      if (user) {
+        res.redirect(`${process.env.FRONTEND_URL}login`);
+      }
     } catch (error) {
       next(error);
     }
