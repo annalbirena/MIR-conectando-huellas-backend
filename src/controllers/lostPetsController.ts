@@ -52,13 +52,16 @@ export class LostPetsController {
     res: Response,
     next: NextFunction,
   ) {
-    const { sex, size, specieId } = req.query;
+    const { sex, size, specieId, lostDateMin, lostDateMax } = req.query;
     try {
       const lostPets = await LostPetsService.getLostPetsByFilters(
         String(sex),
         String(size),
         String(specieId),
+        String(lostDateMin),
+        String(lostDateMax),
       );
+      console.log(lostPets);
       res.json(lostPets);
     } catch (error) {
       next(error);
