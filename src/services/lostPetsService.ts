@@ -1,3 +1,4 @@
+import { Console } from 'console';
 import prisma from './prisma';
 
 type LostPetData = {
@@ -171,7 +172,10 @@ export class LostPetsService {
     sex: string | undefined,
     size: string | undefined,
     specieId: string | undefined,
+    lostDateMin: string | 'undefined',
+    lostDateMax: string | 'undefined',
   ) {
+    let filterIsOk = true;
     const whereClause: any = {}; // Initialize an empty where clause
     if (sex !== 'undefined') {
       whereClause.pet = { sex };
@@ -182,12 +186,20 @@ export class LostPetsService {
     if (specieId !== 'undefined') {
       whereClause.pet = { specieId };
     }
-    console.log(whereClause);
-    const lostPets = await prisma.lostPets.findMany({
-      where: whereClause, // Apply the constructed where clause
-      include: { pet: true, user: true, contact: true }, // Include relationships
-    });
+    if (lostDateMin !== 'undefined' || lostDateMax !== 'undefined') {
+      whereClause.lostDate = {
+        gte: new Date(lostDateMin).toISOString(),
+        lte: new Date(lostDateMax).toISOString(),
+      };
+    }
 
-    return lostPets;
+    if (whereClause == undefined) {
+      return [];
+    } else {
+      return await prisma.lostPets.findMany({
+        where: whereClause, // Apply the constructed where clause
+        include: { pet: true, user: true, contact: true }, // Include relationships
+      });
+    }
   }
 }
