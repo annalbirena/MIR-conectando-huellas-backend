@@ -1,4 +1,4 @@
-import { Console } from 'console';
+import { Console } from 'node:console';
 import prisma from './prisma';
 
 type LostPetData = {
@@ -95,29 +95,61 @@ export class LostPetsService {
     lostDateMin: string | 'undefined',
     lostDateMax: string | 'undefined',
   ) {
-    let filterIsOk = true;
-    const whereClause: any = {}; // Initialize an empty where clause
+    const mulSex = sex?.split(',');
+    const mulSize = size?.split(',');
+    const mulSpecieId = specieId?.split(',');
+
+    const whereClauseSex: any = [];
+    const whereClauseSize: any = [];
+    const whereClauseSpecieId: any = [];
+    const whereClauseLostDate: any = {}; // Initialize an empty where clause
     if (sex !== 'undefined') {
-      whereClause.pet = { sex };
+      console.log(mulSex);
+      mulSex?.forEach((element) => {
+        whereClauseSex.push({ pet: { sex: element } });
+      });
+      console.log(whereClauseSex);
     }
+
     if (size !== 'undefined') {
-      whereClause.pet = { size };
+      mulSize?.forEach((element) => {
+        whereClauseSize.push({ pet: { size: element } });
+      });
     }
+
     if (specieId !== 'undefined') {
-      whereClause.pet = { specieId };
+      mulSpecieId?.forEach((element) => {
+        whereClauseSpecieId.push({ pet: { specieId: element } });
+      });
     }
     if (lostDateMin !== 'undefined' || lostDateMax !== 'undefined') {
-      whereClause.lostDate = {
+      whereClauseLostDate.lostDate = {
         gte: new Date(lostDateMin).toISOString(),
         lte: new Date(lostDateMax).toISOString(),
       };
     }
-
-    if (whereClause == undefined) {
+    console.log(whereClauseLostDate);
+    if (
+      whereClauseSex == undefined &&
+      whereClauseSize == undefined &&
+      whereClauseSpecieId == undefined &&
+      whereClauseLostDate == undefined
+    ) {
       return [];
     } else {
       return await prisma.lostPets.findMany({
-        where: whereClause, // Apply the constructed where clause
+        where: {
+          AND: [
+            whereClauseLostDate,
+            {
+              AND: [
+                { OR: whereClauseSex },
+                { OR: whereClauseSize },
+                { OR: whereClauseSpecieId },
+              ],
+            },
+          ],
+        }, // Apply the constructed where clause
         include: { pet: true, user: true, contact: true }, // Include relationships
       });
     }
