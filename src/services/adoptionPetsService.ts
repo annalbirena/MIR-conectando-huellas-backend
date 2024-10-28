@@ -169,19 +169,38 @@ export class AdoptionPetsService {
     size: string | undefined,
     specieId: string | undefined,
   ) {
-    const whereClause: any = {}; // Initialize an empty where clause
+    // creamos arrays con los valores de los filtros
+    const mulSex = sex?.split(',');
+    const mulSize = size?.split(',');
+    const mulSpecieId = specieId?.split(',');
+    // creamos variables para agregarlos en el where
+    const whereClauseSex: any = [];
+    const whereClauseSize: any = [];
+    const whereClauseSpecieId: any = [];
+    // si el valor no es undefined lo agrega al array
     if (sex !== 'undefined') {
-      whereClause.pet = { sex };
+      mulSex?.forEach((element) => {
+        whereClauseSex.push({ pet: { sex: element } });
+      });
     }
     if (size !== 'undefined') {
-      whereClause.pet = { size };
+      mulSize?.forEach((element) => {
+        whereClauseSize.push({ pet: { size: element } });
+      });
     }
     if (specieId !== 'undefined') {
-      whereClause.pet = { specieId };
+      mulSpecieId?.forEach((element) => {
+        whereClauseSpecieId.push({ pet: { specieId: element } });
+      });
     }
-    console.log(whereClause);
     const adoptionPets = await prisma.adoptionPets.findMany({
-      where: whereClause, // Apply the constructed where clause
+      where: {
+        AND: [
+          { OR: whereClauseSex },
+          { OR: whereClauseSize },
+          { OR: whereClauseSpecieId },
+        ],
+      }, // Apply the constructed where clause
       include: { pet: true, user: true, contact: true }, // Include relationships
     });
 
