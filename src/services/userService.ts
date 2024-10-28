@@ -81,18 +81,12 @@ export class UserService {
 
   static async updateUser(
     id: string,
-    { name, email, phone, address }: UpdateUserData,
+    { name, phone, address }: UpdateUserData,
   ) {
     const userExists = await this.getUserById(id);
 
     if (!userExists) {
       throw new Error('No existe un usuario con ese ID');
-    }
-
-    const userWithSameEmail = await this.getUserByEmail(email);
-
-    if (userWithSameEmail && userWithSameEmail.id !== id) {
-      throw new Error('Ya existe un usuario con ese correo electrónico');
     }
 
     return prisma.users.update({
