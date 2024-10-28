@@ -8,13 +8,27 @@ const PREFIX = '/adoptionpets';
 
 router.get(PREFIX, AdoptionPetsController.getAdoptionPets);
 router.get(`${PREFIX}/:id`, AdoptionPetsController.getAdoptionPetById);
+router.get(
+  `${PREFIX}/user/:userId`,
+  authenticateToken,
+  authorizeRoles(['admin', 'user']),
+  AdoptionPetsController.getAdoptionPetsByUserId,
+);
 router.post(
   PREFIX,
   authenticateToken,
   authorizeRoles(['admin', 'user']),
-  /* lostPetValidator,
+  /* AdoptPetValidator,
   validate, */
   AdoptionPetsController.createAdoptionPet,
+);
+router.put(
+  `${PREFIX}/:id`,
+  authenticateToken,
+  authorizeRoles(['admin', 'user']),
+  /* AdoptPetValidator,
+  validate, */
+  AdoptionPetsController.updateAdoptionPet,
 );
 
 export default router;

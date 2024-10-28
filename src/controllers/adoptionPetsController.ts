@@ -16,6 +16,28 @@ export class AdoptionPetsController {
     }
   }
 
+  static async getAdoptionPetsByUserId(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    const { userId } = req.params;
+
+    try {
+      const adoptionPets =
+        await AdoptionPetsService.getAdoptionPetsByUserId(userId);
+
+      if (!adoptionPets) {
+        res.status(404).json({ error: 'No hay mascotas' });
+        return;
+      }
+
+      res.json(adoptionPets);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   static async getAdoptionPetById(
     req: Request,
     res: Response,
@@ -50,6 +72,22 @@ export class AdoptionPetsController {
         userId,
       });
       res.json(specie);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async updateAdoptionPet(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    try {
+      const { id } = req.params;
+      const data = req.body;
+
+      const adoptionPet = await AdoptionPetsService.updateAdoptionPet(id, data);
+      res.json(adoptionPet);
     } catch (error) {
       next(error);
     }
