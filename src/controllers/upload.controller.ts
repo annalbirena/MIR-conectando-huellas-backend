@@ -3,21 +3,14 @@ import { Request, Response } from 'express';
 const { uploadImage } = require('./../services/upload.service');
 
 async function uploadSingleHandler(req: Request, res: Response) {
-  console.log('single');
-  console.log(req);
   const { path, size } = req.file; // as Express.Multer.File;
-
   const maxSize = 1024 * 1024 * 2; // 2mb
-
   if (size > maxSize) {
-    fs.unlinkSync(path);
     return res.status(400).json({ message: 'File is too large' });
   }
-
   try {
     const result = await uploadImage(path);
-    pet.image = result.url;
-    return res.status(201).json(result.url);
+    return res.json(result.url);
   } catch (error) {
     return res.status(500).json(error);
   } finally {

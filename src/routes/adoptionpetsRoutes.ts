@@ -21,8 +21,8 @@ router.get(
 router.post(
   PREFIX,
   authenticateToken,
-  authorizeRoles(['admin', 'user']),
-  /* AdoptPetValidator,
+  authorizeRoles(['ADMIN', 'USER']),
+  /* lostPetValidator,
   validate, */
   AdoptionPetsController.createAdoptionPet,
 );

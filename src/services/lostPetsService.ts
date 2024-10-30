@@ -1,4 +1,3 @@
-import { Console } from 'node:console';
 import prisma from './prisma';
 
 type LostPetData = {
@@ -62,11 +61,12 @@ export class LostPetsService {
   }
 
   static async createLostPet({ pet, contact, userId }: LostPetData) {
+    const contactParse = JSON.parse(contact);
     const contactResponse = await prisma.contacts.create({
       data: {
-        name: contact.name,
-        phone: contact.phone,
-        address: contact.address,
+        name: contactParse.name,
+        phone: contactParse.phone,
+        address: contactParse.address,
       },
     });
 
@@ -74,18 +74,19 @@ export class LostPetsService {
       throw new Error('Error al crear contacto de mascota');
     }
 
+    const petParse = JSON.parse(pet);
     const petResponse = await prisma.pets.create({
       data: {
-        name: pet.name,
-        ageUnit: pet.age.type,
-        age: Number(pet.age.number),
-        sex: pet.sex,
-        breed: pet.breed,
-        size: pet.size,
-        image: pet.image,
-        location_latitude: pet.location.latitude,
-        location_longitude: pet.location.longitude,
-        specieId: pet.specie,
+        name: petParse.name,
+        ageUnit: petParse.age.type,
+        age: Number(petParse.age.number),
+        sex: petParse.sex,
+        breed: petParse.breed,
+        size: petParse.size,
+        image: petParse.image,
+        location_latitude: petParse.location.latitude,
+        location_longitude: petParse.location.longitude,
+        specieId: petParse.specie,
       },
     });
 
@@ -95,9 +96,9 @@ export class LostPetsService {
 
     return prisma.lostPets.create({
       data: {
-        lostDate: pet.lostDate,
-        statusLost: pet.state,
-        description: pet.description,
+        lostDate: petParse.lostDate,
+        statusLost: petParse.state,
+        description: petParse.description,
         petId: petResponse.id,
         userId: userId,
         contactId: contactResponse.id,

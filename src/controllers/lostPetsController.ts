@@ -54,18 +54,18 @@ export class LostPetsController {
   }
 
   static async createLostPet(req: Request, res: Response, next: NextFunction) {
-    const { pet, contact, userId } = req.body;
+    const { pet, contact, userId } = req.body; // Parsea el JSON recibido en body
 
     try {
+      // Crear la entrada en la base de datos
       const specie = await LostPetsService.createLostPet({
         pet,
         contact,
         userId,
       });
-
       res.json(specie);
     } catch (error) {
-      next(error);
+      next(error); // Pasar error al middleware de manejo de errores
     }
   }
 
@@ -101,7 +101,4 @@ export class LostPetsController {
       next(error);
     }
   }
-}
-function uploadImage(path: any) {
-  throw new Error('Function not implemented.');
 }

@@ -6,9 +6,10 @@ export const authenticateToken = (
   res: Response,
   next: NextFunction,
 ): void => {
-  const authHeader = req.headers['authorization'];
+  const authHeader = req.headers.authorization;
+  console.log(authHeader);
   const token = authHeader && authHeader.split(' ')[1];
-
+  console.log(token);
   if (!token) {
     res.status(401).json({ error: 'Acceso denegado, token no proporcionado' });
     return;
