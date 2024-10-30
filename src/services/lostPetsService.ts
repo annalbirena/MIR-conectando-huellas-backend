@@ -1,4 +1,3 @@
-import { Console } from 'node:console';
 import prisma from './prisma';
 
 type LostPetData = {

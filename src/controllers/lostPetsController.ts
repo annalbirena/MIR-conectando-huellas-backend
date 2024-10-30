@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { LostPetsService } from '../services/lostPetsService';
-const fs = require('fs');
+
 export class LostPetsController {
   static async getLostPets(_: Request, res: Response, next: NextFunction) {
     try {
@@ -68,7 +68,4 @@ export class LostPetsController {
       next(error);
     }
   }
-}
-function uploadImage(path: any) {
-  throw new Error('Function not implemented.');
 }
