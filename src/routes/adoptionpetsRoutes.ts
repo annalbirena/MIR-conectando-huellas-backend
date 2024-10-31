@@ -9,6 +9,10 @@ const PREFIX = '/adoptionpets';
 router.get(PREFIX, AdoptionPetsController.getAdoptionPets);
 router.get(`${PREFIX}/:id`, AdoptionPetsController.getAdoptionPetById);
 router.get(
+  `${PREFIX}/filters/filter`,
+  AdoptionPetsController.getAdoptionPetsByFilters,
+);
+router.get(
   `${PREFIX}/user/:userId`,
   authenticateToken,
   authorizeRoles(['admin', 'user']),
