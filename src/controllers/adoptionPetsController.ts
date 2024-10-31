@@ -62,12 +62,12 @@ export class AdoptionPetsController {
   ) {
     const { sex, size, specieId } = req.query;
     try {
-      const adoptionPet = await AdoptionPetsService.getAdoptionPetsByFilters(
+      const adoptionPets = await AdoptionPetsService.getAdoptionPetsByFilters(
         String(sex),
         String(size),
         String(specieId),
       );
-      res.json(adoptionPet);
+      res.json(adoptionPets);
     } catch (error) {
       next(error);
     }

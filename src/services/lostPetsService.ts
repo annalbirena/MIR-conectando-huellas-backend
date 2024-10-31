@@ -127,7 +127,6 @@ export class LostPetsService {
         lte: new Date(lostDateMax).toISOString(),
       };
     }
-    console.log(whereClauseLostDate);
     if (
       whereClauseSex == undefined &&
       whereClauseSize == undefined &&
