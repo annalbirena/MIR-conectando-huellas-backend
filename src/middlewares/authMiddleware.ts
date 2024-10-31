@@ -22,6 +22,7 @@ export const authenticateToken = (
 
     next();
   } catch (err) {
+    console.log('ERROR CON EL TOKEN');
     res.status(403).json({ error: 'Token inválido o expirado' });
   }
 };

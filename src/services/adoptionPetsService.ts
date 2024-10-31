@@ -57,11 +57,13 @@ export class AdoptionPetsService {
   }
 
   static async createAdoptionPet({ pet, contact, userId }: AdoptionPetData) {
+    const contactParse = JSON.parse(contact);
+    const petParse = JSON.parse(pet);
     const contactResponse = await prisma.contacts.create({
       data: {
-        name: contact.name,
-        phone: contact.phone,
-        address: contact.address,
+        name: contactParse.name,
+        phone: contactParse.phone,
+        address: contactParse.address,
       },
     });
 
@@ -71,16 +73,16 @@ export class AdoptionPetsService {
 
     const petResponse = await prisma.pets.create({
       data: {
-        name: pet.name,
-        ageUnit: pet.age.type,
-        age: Number(pet.age.number),
-        sex: pet.sex,
-        breed: pet.breed,
-        size: pet.size,
-        image: pet.image,
-        location_latitude: pet.location.latitude,
-        location_longitude: pet.location.longitude,
-        specieId: pet.specie,
+        name: petParse.name,
+        ageUnit: petParse.age.type,
+        age: Number(petParse.age.number),
+        sex: petParse.sex,
+        breed: petParse.breed,
+        size: petParse.size,
+        image: petParse.image,
+        location_latitude: petParse.location.latitude,
+        location_longitude: petParse.location.longitude,
+        specieId: petParse.specie,
       },
     });
 
@@ -90,8 +92,8 @@ export class AdoptionPetsService {
 
     return prisma.adoptionPets.create({
       data: {
-        statusAdopt: pet.state,
-        description: pet.description,
+        statusAdopt: petParse.state,
+        description: petParse.description,
         petId: petResponse.id,
         userId: userId,
         contactId: contactResponse.id,

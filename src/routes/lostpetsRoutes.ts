@@ -21,7 +21,7 @@ router.get(`${PREFIX}/pets/filter`, LostPetsController.getLostPetsByFilters); //
 router.post(
   PREFIX,
   authenticateToken,
-  authorizeRoles(['ADMIN', 'USER']),
+  authorizeRoles(['admin', 'user']),
   /* lostPetValidator,
   validate, */
   LostPetsController.createLostPet,
@@ -37,7 +37,8 @@ router.put(
 
 router.post(
   `${PREFIX}/upload`,
-
+  authenticateToken,
+  authorizeRoles(['admin', 'user']),
   upload.single('image'),
   uploadSingleHandler,
 );
