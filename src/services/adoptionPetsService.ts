@@ -100,7 +100,7 @@ export class AdoptionPetsService {
     });
   }
 
-static async updateAdoptionPet(
+  static async updateAdoptionPet(
     id: string,
     { pet, contact }: AdoptionPetData,
   ) {
@@ -163,8 +163,8 @@ static async updateAdoptionPet(
       },
     });
   }
-  
- static async getAdoptionPetsByFilters(
+
+  static async getAdoptionPetsByFilters(
     sex: string | undefined,
     size: string | undefined,
     specieId: string | undefined,

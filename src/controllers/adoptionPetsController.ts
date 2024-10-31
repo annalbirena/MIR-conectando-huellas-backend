@@ -77,7 +77,7 @@ export class AdoptionPetsController {
     }
   }
 
-static async updateAdoptionPet(
+  static async updateAdoptionPet(
     req: Request,
     res: Response,
     next: NextFunction,
@@ -92,7 +92,7 @@ static async updateAdoptionPet(
       next(error);
     }
   }
-  
+
   static async getAdoptionPetsByFilters(
     req: Request,
     res: Response,

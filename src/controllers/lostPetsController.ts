@@ -68,7 +68,7 @@ export class LostPetsController {
       next(error);
     }
   }
-  
+
   static async updateLostPet(req: Request, res: Response, next: NextFunction) {
     try {
       const { id } = req.params;
@@ -97,7 +97,7 @@ export class LostPetsController {
       );
 
       res.json(lostPets);
-      } catch (error) {
+    } catch (error) {
       next(error);
     }
   }

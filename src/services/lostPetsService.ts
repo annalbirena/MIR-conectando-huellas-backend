@@ -105,7 +105,7 @@ export class LostPetsService {
     });
   }
 
-static async updateLostPet(id: string, { pet, contact }: LostPetData) {
+  static async updateLostPet(id: string, { pet, contact }: LostPetData) {
     // Validar si la mascota existe
     const petsExists = await this.getLostPetById(id);
 
@@ -167,7 +167,7 @@ static async updateLostPet(id: string, { pet, contact }: LostPetData) {
     });
   }
 
-static async getLostPetsByFilters(
+  static async getLostPetsByFilters(
     sex: string | undefined,
     size: string | undefined,
     specieId: string | undefined,
