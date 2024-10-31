@@ -8,7 +8,13 @@ const PREFIX = '/lostpets';
 
 router.get(PREFIX, LostPetsController.getLostPets);
 router.get(`${PREFIX}/:id`, LostPetsController.getLostPetById);
-router.get(`${PREFIX}/filters/filter`, LostPetsController.getLostPetsByFilters); // Route for filtering
+router.get(`${PREFIX}/filters/filter`, LostPetsController.getLostPetsByFilters);
+router.get(
+  `${PREFIX}/user/:userId`,
+  authenticateToken,
+  authorizeRoles(['admin', 'user']),
+  LostPetsController.getLostPetsByUserId,
+);
 router.post(
   PREFIX,
   authenticateToken,
@@ -16,6 +22,14 @@ router.post(
   /* lostPetValidator,
   validate, */
   LostPetsController.createLostPet,
+);
+router.put(
+  `${PREFIX}/:id`,
+  authenticateToken,
+  authorizeRoles(['admin', 'user']),
+  /* lostPetValidator,
+  validate, */
+  LostPetsController.updateLostPet,
 );
 
 export default router;

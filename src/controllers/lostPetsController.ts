@@ -16,6 +16,27 @@ export class LostPetsController {
     }
   }
 
+  static async getLostPetsByUserId(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    const { userId } = req.params;
+
+    try {
+      const lostPets = await LostPetsService.getLostPetsByUserId(userId);
+
+      if (!lostPets) {
+        res.status(404).json({ error: 'No hay mascotas' });
+        return;
+      }
+
+      res.json(lostPets);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   static async getLostPetById(req: Request, res: Response, next: NextFunction) {
     const { id } = req.params;
 
@@ -47,6 +68,18 @@ export class LostPetsController {
       next(error);
     }
   }
+  
+  static async updateLostPet(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+      const data = req.body;
+
+      const lostPet = await LostPetsService.updateLostPet(id, data);
+      res.json(lostPet);
+    } catch (error) {
+      next(error);
+    }
+  }
 
   static async getLostPetsByFilters(
     req: Request,
@@ -64,7 +97,7 @@ export class LostPetsController {
       );
 
       res.json(lostPets);
-    } catch (error) {
+      } catch (error) {
       next(error);
     }
   }

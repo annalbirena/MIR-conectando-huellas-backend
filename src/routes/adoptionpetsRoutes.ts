@@ -12,13 +12,27 @@ router.get(
   `${PREFIX}/filters/filter`,
   AdoptionPetsController.getAdoptionPetsByFilters,
 );
+router.get(
+  `${PREFIX}/user/:userId`,
+  authenticateToken,
+  authorizeRoles(['admin', 'user']),
+  AdoptionPetsController.getAdoptionPetsByUserId,
+);
 router.post(
   PREFIX,
   authenticateToken,
   authorizeRoles(['admin', 'user']),
-  /* lostPetValidator,
+  /* AdoptPetValidator,
   validate, */
   AdoptionPetsController.createAdoptionPet,
+);
+router.put(
+  `${PREFIX}/:id`,
+  authenticateToken,
+  authorizeRoles(['admin', 'user']),
+  /* AdoptPetValidator,
+  validate, */
+  AdoptionPetsController.updateAdoptionPet,
 );
 
 export default router;

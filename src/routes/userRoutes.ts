@@ -27,8 +27,6 @@ router.put(
   `${PREFIX}/:id`,
   authenticateToken,
   authorizeRoles(['admin', 'user']),
-  updateUserValidator,
-  validate,
   UserController.updateUser,
 );
 router.patch(

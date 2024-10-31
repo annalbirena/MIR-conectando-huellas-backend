@@ -62,7 +62,7 @@ export class UserController {
 
     try {
       const user = await UserService.verifyAccount(token);
-      res.json({ message: `Cuenta verificada, usuario ${user.id}` });
+      res.json(user);
     } catch (error) {
       next(error);
     }

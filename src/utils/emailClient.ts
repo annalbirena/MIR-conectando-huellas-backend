@@ -27,8 +27,8 @@ export const sendAccountConfirmationEmail = async (
   to: string,
   token: string,
 ) => {
-  // Cambiar la URL de producción
-  const verificationUrl = `${process.env.DEPLOY_URL}api/users/verify/${token}`;
+  /* const verificationUrl = `${process.env.DEPLOY_URL}api/users/verify/${token}`; */
+  const verificationUrl = `${process.env.FRONTEND_VERIFY_URL}/${token}`;
 
   const source = fs.readFileSync(
     path.join(__dirname, '../templates/validateAccountTemplate.hbs'),
