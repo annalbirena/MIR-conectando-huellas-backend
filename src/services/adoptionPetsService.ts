@@ -163,4 +163,47 @@ export class AdoptionPetsService {
       },
     });
   }
+
+  static async getAdoptionPetsByFilters(
+    sex: string | undefined,
+    size: string | undefined,
+    specieId: string | undefined,
+  ) {
+    // creamos arrays con los valores de los filtros
+    const mulSex = sex?.split(',');
+    const mulSize = size?.split(',');
+    const mulSpecieId = specieId?.split(',');
+    // creamos variables para agregarlos en el where
+    const whereClauseSex: any = [];
+    const whereClauseSize: any = [];
+    const whereClauseSpecieId: any = [];
+    // si el valor no es undefined lo agrega al array
+    if (sex !== 'undefined') {
+      mulSex?.forEach((element) => {
+        whereClauseSex.push({ pet: { sex: element } });
+      });
+    }
+    if (size !== 'undefined') {
+      mulSize?.forEach((element) => {
+        whereClauseSize.push({ pet: { size: element } });
+      });
+    }
+    if (specieId !== 'undefined') {
+      mulSpecieId?.forEach((element) => {
+        whereClauseSpecieId.push({ pet: { specieId: element } });
+      });
+    }
+    const adoptionPets = await prisma.adoptionPets.findMany({
+      where: {
+        AND: [
+          { OR: whereClauseSex },
+          { OR: whereClauseSize },
+          { OR: whereClauseSpecieId },
+        ],
+      }, // Apply the constructed where clause
+      include: { pet: true, user: true, contact: true }, // Include relationships
+    });
+
+    return adoptionPets;
+  }
 }

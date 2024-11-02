@@ -166,4 +166,70 @@ export class LostPetsService {
       },
     });
   }
+
+  static async getLostPetsByFilters(
+    sex: string | undefined,
+    size: string | undefined,
+    specieId: string | undefined,
+    lostDateMin: string | 'undefined',
+    lostDateMax: string | 'undefined',
+  ) {
+    const mulSex = sex?.split(',');
+    const mulSize = size?.split(',');
+    const mulSpecieId = specieId?.split(',');
+
+    const whereClauseSex: any = [];
+    const whereClauseSize: any = [];
+    const whereClauseSpecieId: any = [];
+    const whereClauseLostDate: any = {}; // Initialize an empty where clause
+    if (sex !== 'undefined') {
+      console.log(mulSex);
+      mulSex?.forEach((element) => {
+        whereClauseSex.push({ pet: { sex: element } });
+      });
+      console.log(whereClauseSex);
+    }
+
+    if (size !== 'undefined') {
+      mulSize?.forEach((element) => {
+        whereClauseSize.push({ pet: { size: element } });
+      });
+    }
+
+    if (specieId !== 'undefined') {
+      mulSpecieId?.forEach((element) => {
+        whereClauseSpecieId.push({ pet: { specieId: element } });
+      });
+    }
+    if (lostDateMin !== 'undefined' || lostDateMax !== 'undefined') {
+      whereClauseLostDate.lostDate = {
+        gte: new Date(lostDateMin).toISOString(),
+        lte: new Date(lostDateMax).toISOString(),
+      };
+    }
+    if (
+      whereClauseSex == undefined &&
+      whereClauseSize == undefined &&
+      whereClauseSpecieId == undefined &&
+      whereClauseLostDate == undefined
+    ) {
+      return [];
+    } else {
+      return await prisma.lostPets.findMany({
+        where: {
+          AND: [
+            whereClauseLostDate,
+            {
+              AND: [
+                { OR: whereClauseSex },
+                { OR: whereClauseSize },
+                { OR: whereClauseSpecieId },
+              ],
+            },
+          ],
+        }, // Apply the constructed where clause
+        include: { pet: true, user: true, contact: true }, // Include relationships
+      });
+    }
+  }
 }

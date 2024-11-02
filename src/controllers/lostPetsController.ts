@@ -62,6 +62,7 @@ export class LostPetsController {
         contact,
         userId,
       });
+
       res.json(specie);
     } catch (error) {
       next(error);
@@ -75,6 +76,27 @@ export class LostPetsController {
 
       const lostPet = await LostPetsService.updateLostPet(id, data);
       res.json(lostPet);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async getLostPetsByFilters(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
+    const { sex, size, specieId, lostDateMin, lostDateMax } = req.query;
+    try {
+      const lostPets = await LostPetsService.getLostPetsByFilters(
+        String(sex),
+        String(size),
+        String(specieId),
+        String(lostDateMin),
+        String(lostDateMax),
+      );
+
+      res.json(lostPets);
     } catch (error) {
       next(error);
     }
