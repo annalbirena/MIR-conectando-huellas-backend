@@ -21,6 +21,7 @@ export const authorizeRoles = (roles: string[]) => {
 
       // Cast a 'decodedToken'
       const role = decodedToken.role as string;
+
       // Comprobamos si el role del usuario está en la lista de roles permitidos
       if (!roles.includes(role)) {
         res

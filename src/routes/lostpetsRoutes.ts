@@ -35,8 +35,8 @@ router.put(
 );
 router.post(
   `${PREFIX}/upload`,
-  /* authenticateToken,
-  authorizeRoles(['admin', 'user']), */
+  authenticateToken,
+  authorizeRoles(['admin', 'user']),
   upload.single('image'),
   uploadSingleHandler,
 );
