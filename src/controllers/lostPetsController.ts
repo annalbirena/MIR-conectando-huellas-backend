@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { LostPetsService } from '../services/lostPetsService';
-const fs = require('fs');
+
 export class LostPetsController {
   static async getLostPets(_: Request, res: Response, next: NextFunction) {
     try {
@@ -54,10 +54,9 @@ export class LostPetsController {
   }
 
   static async createLostPet(req: Request, res: Response, next: NextFunction) {
-    const { pet, contact, userId } = req.body; // Parsea el JSON recibido en body
+    const { pet, contact, userId } = req.body;
 
     try {
-      // Crear la entrada en la base de datos
       const specie = await LostPetsService.createLostPet({
         pet,
         contact,
@@ -65,7 +64,7 @@ export class LostPetsController {
       });
       res.json(specie);
     } catch (error) {
-      next(error); // Pasar error al middleware de manejo de errores
+      next(error);
     }
   }
 
@@ -76,27 +75,6 @@ export class LostPetsController {
 
       const lostPet = await LostPetsService.updateLostPet(id, data);
       res.json(lostPet);
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  static async getLostPetsByFilters(
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ) {
-    const { sex, size, specieId, lostDateMin, lostDateMax } = req.query;
-    try {
-      const lostPets = await LostPetsService.getLostPetsByFilters(
-        String(sex),
-        String(size),
-        String(specieId),
-        String(lostDateMin),
-        String(lostDateMax),
-      );
-
-      res.json(lostPets);
     } catch (error) {
       next(error);
     }

@@ -6,10 +6,8 @@ export const authenticateToken = (
   res: Response,
   next: NextFunction,
 ): void => {
-  const authHeader = req.headers.authorization;
-  console.log(authHeader);
+  const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
-  console.log(token);
   if (!token) {
     res.status(401).json({ error: 'Acceso denegado, token no proporcionado' });
     return;
@@ -22,7 +20,6 @@ export const authenticateToken = (
 
     next();
   } catch (err) {
-    console.log('ERROR CON EL TOKEN');
     res.status(403).json({ error: 'Token inválido o expirado' });
   }
 };
