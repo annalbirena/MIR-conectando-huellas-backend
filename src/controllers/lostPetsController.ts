@@ -57,13 +57,13 @@ export class LostPetsController {
     const { pet, contact, userId } = req.body;
 
     try {
-      const specie = await LostPetsService.createLostPet({
+      const lostPet = await LostPetsService.createLostPet({
         pet,
         contact,
         userId,
       });
 
-      res.json(specie);
+      res.json(lostPet);
     } catch (error) {
       next(error);
     }
