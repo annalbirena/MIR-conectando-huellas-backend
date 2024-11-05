@@ -66,7 +66,8 @@ model Pets {
   sex                String
   breed              String?
   size               String
-  image              String
+  imageUrl           String
+  imageId            String
   images             Images[]
   location_latitude  Float
   location_longitude Float

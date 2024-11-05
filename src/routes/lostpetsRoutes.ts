@@ -2,12 +2,9 @@ import { Router } from 'express';
 import { LostPetsController } from '../controllers/lostPetsController';
 import { authenticateToken } from '@middlewares/authMiddleware';
 import { authorizeRoles } from '@middlewares/rolesMiddleware';
-const multer = require('multer');
-const { uploadSingleHandler } = require('../controllers/upload.controller');
 
 const router = Router();
 const PREFIX = '/lostpets';
-const upload = multer({ dest: './temp' });
 
 router.get(PREFIX, LostPetsController.getLostPets);
 router.get(`${PREFIX}/:id`, LostPetsController.getLostPetById);
@@ -33,13 +30,6 @@ router.put(
   /* lostPetValidator,
   validate, */
   LostPetsController.updateLostPet,
-);
-router.post(
-  `${PREFIX}/upload`,
-  authenticateToken,
-  authorizeRoles(['admin', 'user']),
-  upload.single('image'),
-  uploadSingleHandler,
 );
 
 export default router;

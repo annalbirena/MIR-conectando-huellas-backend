@@ -17,6 +17,7 @@ type AdoptionPetData = {
     };
     state: boolean;
     image: string;
+    imageId: string;
     description: string;
   };
   contact: {
@@ -77,7 +78,8 @@ export class AdoptionPetsService {
         sex: pet.sex,
         breed: pet.breed,
         size: pet.size,
-        image: pet.image,
+        imageUrl: pet.image,
+        imageId: pet.imageId,
         location_latitude: pet.location.latitude,
         location_longitude: pet.location.longitude,
         specieId: pet.specie,
@@ -156,7 +158,8 @@ export class AdoptionPetsService {
         sex: pet.sex,
         breed: pet.breed,
         size: pet.size,
-        image: pet.image,
+        imageUrl: pet.image,
+        imageId: pet.imageId,
         location_latitude: pet.location.latitude,
         location_longitude: pet.location.longitude,
         specieId: pet.specie,

@@ -66,12 +66,13 @@ export class AdoptionPetsController {
     const { pet, contact, userId } = req.body;
 
     try {
-      const specie = await AdoptionPetsService.createAdoptionPet({
+      const adoptionPet = await AdoptionPetsService.createAdoptionPet({
         pet,
         contact,
         userId,
       });
-      res.json(specie);
+
+      res.json(adoptionPet);
     } catch (error) {
       next(error);
     }
