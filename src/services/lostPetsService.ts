@@ -32,6 +32,7 @@ type LostPetData = {
 export class LostPetsService {
   static async getLostPets() {
     return prisma.lostPets.findMany({
+      where: { statusLost: true },
       include: { pet: true, user: true, contact: true },
       orderBy: {
         lostDate: 'desc',

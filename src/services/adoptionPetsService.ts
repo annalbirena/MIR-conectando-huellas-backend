@@ -31,6 +31,7 @@ type AdoptionPetData = {
 export class AdoptionPetsService {
   static async getAdoptionPets() {
     return prisma.adoptionPets.findMany({
+      where: { statusAdopt: true },
       include: { pet: true, user: true, contact: true },
     });
   }
