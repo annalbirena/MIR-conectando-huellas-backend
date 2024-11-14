@@ -1,13 +1,16 @@
 <html>
-  <head>
-    <title>Message HTML Title</title>
-  </head>
-  <body>
-    <div>
-      <h2>Conectando Huellas</h2>
-      <h3>¡Bienvenido a nuestra comunidad {{name}}!</h3>
-      <p>Confirma tu cuenta haciendo click
-        <a target='_blank' href={{verificationUrl}}>aquí</a></p>
+<head>
+  <title>Message HTML Title</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body style="font-family: 'Poppins', sans-serif; text-align: center; display: grid; place-items: center;">
+  <div style="width: 500px; min-width: 300px; padding: 36px 16px;">
+    <h1 style=" color: #b784f0; font-weight: 600; font-size: 36px">Conectando Huellas</h1>
+    <h3 style="margin-top: 36px;">¡Bienvenid@ a nuestra comunidad {{name}}!</h3>
+    <p>Para continuar, debemos verificar que eres el(la) propietario(a) de esta dirección de correo electrónico {{email}}</p>
+    <div style="margin-top: 36px; display: flex; justify-content: center;">
+      <a href="{{verificationUrl}}" target="_blank" style="display: block; width: 180px; padding: 8px 15px; text-decoration: none; text-align: center; background-color: #d3ff09; color: #1f1f1f; border-radius: 5px; font-size: 16px; font-weight: 600; display: block;">Verificar cuenta</a>
     </div>
-  </body>
+  </div>
+</body>
 </html>

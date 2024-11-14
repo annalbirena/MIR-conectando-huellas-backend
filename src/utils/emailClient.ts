@@ -38,6 +38,7 @@ export const sendAccountConfirmationEmail = async (
   const template = Handlebars.compile(source);
   const replacements = {
     name: name,
+    email: to,
     verificationUrl: verificationUrl,
   };
   const htmlToSend = template(replacements);
