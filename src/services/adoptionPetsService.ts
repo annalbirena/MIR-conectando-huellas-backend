@@ -33,6 +33,9 @@ export class AdoptionPetsService {
     return prisma.adoptionPets.findMany({
       where: { statusAdopt: true },
       include: { pet: true, user: true, contact: true },
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
   }
 
@@ -199,6 +202,7 @@ export class AdoptionPetsService {
     }
     const adoptionPets = await prisma.adoptionPets.findMany({
       where: {
+        statusAdopt: true,
         AND: [
           { OR: whereClauseSex },
           { OR: whereClauseSize },
@@ -206,6 +210,9 @@ export class AdoptionPetsService {
         ],
       }, // Apply the constructed where clause
       include: { pet: true, user: true, contact: true }, // Include relationships
+      orderBy: {
+        createdAt: 'desc',
+      },
     });
 
     return adoptionPets;

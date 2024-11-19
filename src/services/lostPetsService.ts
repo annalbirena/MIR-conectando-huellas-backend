@@ -221,6 +221,7 @@ export class LostPetsService {
     } else {
       return await prisma.lostPets.findMany({
         where: {
+          statusLost: true,
           AND: [
             whereClauseLostDate,
             {
@@ -233,6 +234,9 @@ export class LostPetsService {
           ],
         }, // Apply the constructed where clause
         include: { pet: true, user: true, contact: true }, // Include relationships
+        orderBy: {
+          lostDate: 'desc',
+        },
       });
     }
   }
