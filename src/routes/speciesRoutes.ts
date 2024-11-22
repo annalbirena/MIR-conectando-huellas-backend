@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import { SpecieController } from '../controllers/speciesController';
-import { authenticateToken } from '@middlewares/authMiddleware';
-import { authorizeRoles } from '@middlewares/rolesMiddleware';
-import validate from '@middlewares/validate';
+import { authenticateToken } from '../middlewares/authMiddleware';
+import { authorizeRoles } from '../middlewares/rolesMiddleware';
+import validate from '../middlewares/validate';
 import { entityNameValidator } from '../validators/base';
 
 const router = Router();

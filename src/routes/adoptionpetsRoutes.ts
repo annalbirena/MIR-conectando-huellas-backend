@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { AdoptionPetsController } from '../controllers/adoptionPetsController';
-import { authenticateToken } from '@middlewares/authMiddleware';
-import { authorizeRoles } from '@middlewares/rolesMiddleware';
+import { authenticateToken } from '../middlewares/authMiddleware';
+import { authorizeRoles } from '../middlewares/rolesMiddleware';
 
 const router = Router();
 const PREFIX = '/adoptionpets';
