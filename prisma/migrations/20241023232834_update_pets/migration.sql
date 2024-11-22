@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Pets" ALTER COLUMN "breed" DROP NOT NULL;

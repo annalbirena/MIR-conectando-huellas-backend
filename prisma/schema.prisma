@@ -14,26 +14,20 @@ datasource db {
 }
 
 model Users {
-  id           String         @id @unique @default(cuid())
-  email        String         @unique @db.VarChar(50)
-  name         String         @db.VarChar(100)
-  phone        String
-  address      String
-  passwordHash String
-  lostPets     LostPets[]
-  adoptionPets AdoptionPets[]
-  createdAt    DateTime       @default(now())
-  updateAt     DateTime       @updatedAt
-  isDeleted    Boolean        @default(false)
-}
-
-model Breed {
-  id        String   @id @unique @default(cuid())
-  name      String   @unique @db.VarChar(100)
-  pets      Pets[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  isDeleted Boolean  @default(false)
+  id                String         @id @unique @default(cuid())
+  email             String         @unique @db.VarChar(50)
+  name              String         @db.VarChar(100)
+  phone             String
+  address           String
+  role              Role           @default(USER)
+  passwordHash      String
+  lostPets          LostPets[]
+  adoptionPets      AdoptionPets[]
+  isVerified        Boolean        @default(false)
+  verificationToken String?
+  createdAt         DateTime       @default(now())
+  updateAt          DateTime       @updatedAt
+  isDeleted         Boolean        @default(false)
 }
 
 model Species {
@@ -67,16 +61,16 @@ model Images {
 model Pets {
   id                 String         @id @unique @default(cuid())
   name               String         @db.VarChar(100)
-  ageUnit            Boolean
+  ageUnit            String
   age                Int
   sex                String
+  breed              String?
   size               String
-  image              String
+  imageUrl           String
+  imageId            String
   images             Images[]
   location_latitude  Float
   location_longitude Float
-  breed              Breed          @relation(fields: [breedId], references: [id])
-  breedId            String
   specie             Species        @relation(fields: [specieId], references: [id])
   specieId           String
   lostPets           LostPets[]
@@ -90,7 +84,7 @@ model LostPets {
   id          String   @id @unique @default(cuid())
   lostDate    DateTime
   statusLost  Boolean
-  description String
+  description String?
   pet         Pets     @relation(fields: [petId], references: [id])
   petId       String
   user        Users    @relation(fields: [userId], references: [id])
@@ -105,7 +99,7 @@ model LostPets {
 model AdoptionPets {
   id          String   @id @unique @default(cuid())
   statusAdopt Boolean
-  description String
+  description String?
   pet         Pets     @relation(fields: [petId], references: [id])
   petId       String
   user        Users    @relation(fields: [userId], references: [id])
@@ -125,4 +119,9 @@ model Admin {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   isDeleted    Boolean  @default(false)
+}
+
+enum Role {
+  USER
+  ADMIN
 }
