@@ -11,13 +11,7 @@
     "skipLibCheck": true,
     "sourceMap": false,
     "strict": true,
-    "target": "es2016",
-    "paths": {
-      "@api/*": ["./src/api/*"],
-      "@config/*": ["./src/config/*"],
-      "@auth/*": ["./src/auth/*"],
-      "@middlewares/*": ["./src/middlewares/*"]
-    }
+    "target": "es2016"
   },
   "include": ["src/**/*"]
 }

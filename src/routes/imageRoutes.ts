@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { authenticateToken } from '@middlewares/authMiddleware';
-import { authorizeRoles } from '@middlewares/rolesMiddleware';
+import { authenticateToken } from '../middlewares/authMiddleware';
+import { authorizeRoles } from '../middlewares/rolesMiddleware';
 
 const multer = require('multer');
 const {
